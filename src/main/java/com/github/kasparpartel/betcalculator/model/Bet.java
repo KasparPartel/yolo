@@ -1,6 +1,8 @@
 package com.github.kasparpartel.betcalculator.model;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
@@ -27,25 +29,23 @@ public class Bet {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    private int winningNumber = ThreadLocalRandom.current().nextInt(1, 101);
+    private final int winningNumber = ThreadLocalRandom.current().nextInt(1, 101);
 
-    private float betAmount;
-    private int number;
+    private Integer userNumber;
+    private Float betAmount;
 
-    private boolean won = false;
+    private boolean isWin = false;
     private float wonAmount = 0;
 
-    public boolean isWinning() {
-        if (this.getNumber() < this.getWinningNumber()) {
-            return false;
-        }
-        this.setWon(true);
-        return true;
+    public boolean winning() {
+        return this.getUserNumber() > this.getWinningNumber();
     }
 
     public void calculateWinnings() {
-        float winnings = this.getBetAmount() * (99 / (100 - this.getNumber()));
-        this.setWonAmount(winnings);
+        if (isWin()) {
+            float winnings = this.getBetAmount() * ((float) 99 / (100 - (100 - this.getUserNumber())));
+            this.setWonAmount(winnings);
+        }
     }
 
     @Override

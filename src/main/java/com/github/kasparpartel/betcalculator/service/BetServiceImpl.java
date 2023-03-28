@@ -16,9 +16,8 @@ public class BetServiceImpl implements BetService {
 
     @Override
     public Bet add(Bet bet) {
-        if (bet.isWinning()) {
-            bet.calculateWinnings();
-        }
+        bet.setWin(bet.winning());
+        bet.calculateWinnings();
         repository.add(bet);
         return bet;
     }
