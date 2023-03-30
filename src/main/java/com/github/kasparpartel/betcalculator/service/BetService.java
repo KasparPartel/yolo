@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface BetService {
 
-    Bet add(Bet bet);
+    Bet saveBet(Bet bet);
 
-    List<Bet> getAll();
+    List<Bet> getAllBets();
 }

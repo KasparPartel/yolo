@@ -4,6 +4,7 @@ import com.github.kasparpartel.betcalculator.dto.BetDto;
 import com.github.kasparpartel.betcalculator.model.Bet;
 import com.github.kasparpartel.betcalculator.service.BetService;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,7 +16,9 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/bets")
+@RequestMapping(value = "/api/v1/bets",
+        consumes = MediaType.APPLICATION_JSON_VALUE,
+        produces = MediaType.APPLICATION_JSON_VALUE)
 public class BetCalculatorController {
 
     private final BetService betService;
@@ -27,23 +30,14 @@ public class BetCalculatorController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public BetDto create(@Valid @RequestBody BetDto betDto) {
-        Bet bet = new Bet();
-        bet.setUserNumber(betDto.getUserNumber());
-        bet.setBetAmount(betDto.getBetAmount());
-        Bet savedBet = betService.add(bet);
-
-        return new BetDto(
-                savedBet.getId(),
-                savedBet.getWinningNumber(),
-                savedBet.getUserNumber(),
-                savedBet.getBetAmount(),
-                savedBet.isWin(),
-                savedBet.getWonAmount()
-        );
+        System.out.println(betDto);
+        Bet savedBet = betService.saveBet(betDto.toEntity());
+        System.out.println(savedBet);
+        return savedBet.toDto();
     }
 
     @GetMapping
     public List<Bet> getAll() {
-        return betService.getAll();
+        return betService.getAllBets();
     }
 }

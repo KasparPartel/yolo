@@ -1,5 +1,6 @@
 package com.github.kasparpartel.betcalculator.dto;
 
+import com.github.kasparpartel.betcalculator.model.Bet;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -30,5 +31,12 @@ public class BetDto {
     public BetDto(Integer userNumber, Float betAmount) {
         this.userNumber = userNumber;
         this.betAmount = betAmount;
+    }
+
+    public Bet toEntity() {
+        Bet bet = new Bet();
+        bet.setUserNumber(this.getUserNumber());
+        bet.setBetAmount(this.getBetAmount());
+        return bet;
     }
 }

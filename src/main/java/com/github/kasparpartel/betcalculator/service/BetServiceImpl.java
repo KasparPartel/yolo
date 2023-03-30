@@ -15,15 +15,15 @@ public class BetServiceImpl implements BetService {
     }
 
     @Override
-    public Bet add(Bet bet) {
+    public Bet saveBet(Bet bet) {
         bet.setWin(bet.winning());
         bet.calculateWinnings();
-        repository.add(bet);
+        repository.save(bet);
         return bet;
     }
 
     @Override
-    public List<Bet> getAll() {
-        return repository.getBets();
+    public List<Bet> getAllBets() {
+        return repository.findAll();
     }
 }

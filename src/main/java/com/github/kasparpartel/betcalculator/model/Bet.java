@@ -1,5 +1,6 @@
 package com.github.kasparpartel.betcalculator.model;
 
+import com.github.kasparpartel.betcalculator.dto.BetDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -21,6 +22,7 @@ import java.util.concurrent.ThreadLocalRandom;
 @Setter
 @ToString
 @RequiredArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "bets")
 public class Bet {
@@ -31,7 +33,9 @@ public class Bet {
 
     private final int winningNumber = ThreadLocalRandom.current().nextInt(1, 101);
 
+    @NonNull
     private Integer userNumber;
+    @NonNull
     private Float betAmount;
 
     private boolean isWin = false;
@@ -46,6 +50,17 @@ public class Bet {
             float winnings = this.getBetAmount() * ((float) 99 / (100 - (100 - this.getUserNumber())));
             this.setWonAmount(winnings);
         }
+    }
+
+    public BetDto toDto() {
+        return new BetDto(
+                this.getId(),
+                this.getWinningNumber(),
+                this.getUserNumber(),
+                this.getBetAmount(),
+                this.isWin(),
+                this.getWonAmount()
+        );
     }
 
     @Override
