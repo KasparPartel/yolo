@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.Positive;
@@ -13,6 +14,7 @@ import javax.validation.constraints.Positive;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@RequiredArgsConstructor
 public class BetDto {
     private Long id;
     private int winningNumber;
@@ -28,15 +30,7 @@ public class BetDto {
     private boolean isWin;
     private float wonAmount;
 
-    public BetDto(Integer userNumber, Float betAmount) {
-        this.userNumber = userNumber;
-        this.betAmount = betAmount;
-    }
-
     public Bet toEntity() {
-        Bet bet = new Bet();
-        bet.setUserNumber(this.getUserNumber());
-        bet.setBetAmount(this.getBetAmount());
-        return bet;
+        return new Bet(this.getUserNumber(), this.getBetAmount());
     }
 }

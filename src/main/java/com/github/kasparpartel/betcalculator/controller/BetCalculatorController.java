@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/api/v1/bets",
@@ -30,14 +31,15 @@ public class BetCalculatorController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public BetDto create(@Valid @RequestBody BetDto betDto) {
-        System.out.println(betDto);
         Bet savedBet = betService.saveBet(betDto.toEntity());
-        System.out.println(savedBet);
         return savedBet.toDto();
     }
 
     @GetMapping
-    public List<Bet> getAll() {
-        return betService.getAllBets();
+    public List<BetDto> getAll() {
+        return betService.getAllBets()
+                .stream()
+                .map(Bet::toDto)
+                .collect(Collectors.toList());
     }
 }
