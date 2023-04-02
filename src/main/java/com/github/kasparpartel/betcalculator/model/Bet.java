@@ -1,6 +1,6 @@
 package com.github.kasparpartel.betcalculator.model;
 
-import com.github.kasparpartel.betcalculator.dto.BetDto;
+import com.github.kasparpartel.betcalculator.dto.BetResponseDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.Hibernate;
+import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,6 +16,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.PositiveOrZero;
 import java.util.Objects;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -22,7 +25,7 @@ import java.util.concurrent.ThreadLocalRandom;
 @Setter
 @ToString
 @RequiredArgsConstructor
-@NoArgsConstructor
+@NoArgsConstructor(force = true)
 @Entity
 @Table(name = "bets")
 public class Bet {
@@ -31,14 +34,20 @@ public class Bet {
     @Column(name = "id", nullable = false)
     private Long id;
 
+    @Range(min = 1, max = 100)
     private final int winningNumber = ThreadLocalRandom.current().nextInt(1, 101);
 
     @NonNull
+    @Range(min = 1, max = 100)
     private Integer userNumber;
+
     @NonNull
+    @Positive
     private Float betAmount;
 
     private boolean isWin = false;
+
+    @PositiveOrZero
     private float wonAmount = 0;
 
     public boolean winning() {
@@ -52,8 +61,8 @@ public class Bet {
         }
     }
 
-    public BetDto toDto() {
-        return new BetDto(
+    public BetResponseDto toDto() {
+        return new BetResponseDto(
                 this.getId(),
                 this.getWinningNumber(),
                 this.getUserNumber(),

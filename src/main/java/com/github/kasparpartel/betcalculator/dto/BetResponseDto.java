@@ -1,22 +1,22 @@
 package com.github.kasparpartel.betcalculator.dto;
 
-import com.github.kasparpartel.betcalculator.model.Bet;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.Positive;
+import javax.validation.constraints.PositiveOrZero;
 
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
 @RequiredArgsConstructor
-public class BetDto {
+public class BetResponseDto {
     private Long id;
+
+    @Range(min = 1, max = 100)
     private int winningNumber;
 
     @NonNull
@@ -28,9 +28,7 @@ public class BetDto {
     private Float betAmount;
 
     private boolean isWin;
-    private float wonAmount;
 
-    public Bet toEntity() {
-        return new Bet(this.getUserNumber(), this.getBetAmount());
-    }
+    @PositiveOrZero
+    private float wonAmount;
 }

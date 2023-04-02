@@ -1,6 +1,7 @@
 package com.github.kasparpartel.betcalculator.controller;
 
-import com.github.kasparpartel.betcalculator.dto.BetDto;
+import com.github.kasparpartel.betcalculator.dto.BetRequestDto;
+import com.github.kasparpartel.betcalculator.dto.BetResponseDto;
 import com.github.kasparpartel.betcalculator.model.Bet;
 import com.github.kasparpartel.betcalculator.service.BetService;
 import org.springframework.http.HttpStatus;
@@ -30,13 +31,13 @@ public class BetCalculatorController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public BetDto create(@Valid @RequestBody BetDto betDto) {
-        Bet savedBet = betService.saveBet(betDto.toEntity());
+    public BetResponseDto create(@Valid @RequestBody BetRequestDto betRequestDto) {
+        Bet savedBet = betService.saveBet(betRequestDto.toEntity());
         return savedBet.toDto();
     }
 
     @GetMapping
-    public List<BetDto> getAll() {
+    public List<BetResponseDto> getAll() {
         return betService.getAllBets()
                 .stream()
                 .map(Bet::toDto)

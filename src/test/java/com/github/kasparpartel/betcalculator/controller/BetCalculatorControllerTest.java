@@ -1,7 +1,8 @@
 package com.github.kasparpartel.betcalculator.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.kasparpartel.betcalculator.dto.BetDto;
+import com.github.kasparpartel.betcalculator.dto.BetRequestDto;
+import com.github.kasparpartel.betcalculator.dto.BetResponseDto;
 import com.github.kasparpartel.betcalculator.model.Bet;
 import com.github.kasparpartel.betcalculator.service.BetService;
 import org.junit.jupiter.api.AfterEach;
@@ -59,13 +60,13 @@ class BetCalculatorControllerTest {
 
     @Test
     public void postMappingOfBet() throws Exception {
-        BetDto betDto = new BetDto(30, 75.0F);
+        BetRequestDto betRequestDto = new BetRequestDto(30, 75.0F);
 
         given(betService.saveBet(any())).willReturn(bet);
 
         mockMvc.perform(post("/api/v1/bets")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(betDto)))
+                        .content(objectMapper.writeValueAsString(betRequestDto)))
                 .andExpect(status().isCreated());
 
         verify(betService, times(1)).saveBet(any());
