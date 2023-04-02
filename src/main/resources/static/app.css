@@ -1,0 +1,28 @@
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    padding: 1em;
+}
+
+.lost {
+    background-color: lightcoral;
+}
+
+.won {
+    background-color: lightgreen;
+}
+
+.bet {
+    display: flex;
+    flex-direction: column;
+    padding: 2em;
+}
+
+.bets {
+    display: flex;
+    flex-wrap: wrap;
+}
