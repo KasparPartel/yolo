@@ -2,7 +2,6 @@ package com.github.kasparpartel.betcalculator.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.kasparpartel.betcalculator.dto.BetRequestDto;
-import com.github.kasparpartel.betcalculator.dto.BetResponseDto;
 import com.github.kasparpartel.betcalculator.model.Bet;
 import com.github.kasparpartel.betcalculator.service.BetService;
 import org.junit.jupiter.api.AfterEach;
