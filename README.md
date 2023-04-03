@@ -28,7 +28,7 @@
 - #### POST single bet - ```/api/v1/bets``` 
 - #### GET all bets - ```/api/v1/bets```
 
-### Websocket endpoint
+### Websocket endpoints
 - #### CONNECT - ```/ws-endpoint```
 - #### SUBSCRIPTION POOL - ```/topic/bets```
 - #### CREATE BET - ```/app/addBet```
