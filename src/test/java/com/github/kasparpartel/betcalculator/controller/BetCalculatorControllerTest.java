@@ -2,7 +2,6 @@ package com.github.kasparpartel.betcalculator.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.kasparpartel.betcalculator.dto.BetRequestDto;
-import com.github.kasparpartel.betcalculator.dto.BetResponseDto;
 import com.github.kasparpartel.betcalculator.model.Bet;
 import com.github.kasparpartel.betcalculator.service.BetService;
 import org.junit.jupiter.api.AfterEach;
@@ -19,6 +18,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
@@ -62,7 +62,7 @@ class BetCalculatorControllerTest {
     public void postMappingOfBet() throws Exception {
         BetRequestDto betRequestDto = new BetRequestDto(30, 75.0F);
 
-        given(betService.saveBet(any())).willReturn(bet);
+        given(betService.saveBet(any())).willReturn(CompletableFuture.completedFuture(bet));
 
         mockMvc.perform(post("/api/v1/bets")
                         .contentType(MediaType.APPLICATION_JSON)

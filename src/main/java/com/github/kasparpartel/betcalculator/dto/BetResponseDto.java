@@ -2,6 +2,7 @@ package com.github.kasparpartel.betcalculator.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.validator.constraints.Range;
@@ -13,6 +14,7 @@ import javax.validation.constraints.PositiveOrZero;
 @Data
 @AllArgsConstructor
 @RequiredArgsConstructor
+@NoArgsConstructor(force = true)
 public class BetResponseDto {
     private Long id;
 

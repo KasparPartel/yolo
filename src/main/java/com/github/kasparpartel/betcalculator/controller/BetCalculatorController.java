@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
 @RestController
@@ -31,9 +33,10 @@ public class BetCalculatorController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public BetResponseDto create(@Valid @RequestBody BetRequestDto betRequestDto) {
-        Bet savedBet = betService.saveBet(betRequestDto.toEntity());
-        return savedBet.toDto();
+    public BetResponseDto create(@Valid @RequestBody BetRequestDto betRequestDto) throws ExecutionException,
+            InterruptedException {
+        CompletableFuture<Bet> savedBet = betService.saveBet(betRequestDto.toEntity());
+        return savedBet.get().toDto();
     }
 
     @GetMapping

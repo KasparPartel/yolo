@@ -12,6 +12,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -43,7 +44,7 @@ class BetServiceTest {
     void givenBetObject_whenSaveBet_thenReturnBetObject() {
         given(betRepository.save(bet)).willReturn(bet);
 
-        Bet savedBet = betService.saveBet(bet);
+        CompletableFuture<Bet> savedBet = betService.saveBet(bet);
 
         assertNotNull(savedBet);
     }
