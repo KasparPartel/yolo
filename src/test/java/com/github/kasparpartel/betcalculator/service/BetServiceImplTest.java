@@ -37,6 +37,7 @@ class BetServiceTest {
 
     @AfterEach
     void tearDown() {
+        bet = null;
     }
 
     @DisplayName("JUnit test for saveBet method")

@@ -57,22 +57,17 @@ class BetCalculatorWebsocketControllerTest {
         session.subscribe("/topic/bets", new StompFrameHandler() {
             @Override
             public Type getPayloadType(StompHeaders headers) {
-                System.out.println(headers);
                 return BetResponseDto.class;
             }
 
             @Override
             public void handleFrame(StompHeaders headers, Object payload) {
-                System.out.println(payload);
                 completableFuture.complete((BetResponseDto) payload);
             }
         });
 
-        System.out.println("tere");
-
         session.send("/app/addBet", betRequestDto);
 
-//        BetResponseDto betResponseDto = completableFuture.get(5, TimeUnit.SECONDS);
         BetResponseDto betResponseDto = completableFuture.get();
 
         assertNotNull(betResponseDto);

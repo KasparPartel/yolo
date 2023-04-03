@@ -12,6 +12,7 @@ function setConnected(connected) {
         betsDiv.hidden = false;
     } else {
         disconnectEl.disabled = true;
+        connectEl.disabled = false;
         betsDiv.hidden = true;
     }
 }

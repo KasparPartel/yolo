@@ -1,6 +1,5 @@
 package com.github.kasparpartel.betcalculator.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.kasparpartel.betcalculator.model.Bet;
 import lombok.Data;
 import lombok.NoArgsConstructor;

@@ -8,6 +8,9 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
 
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+
 @Controller
 public class BetCalculatorWebsocketController {
 
@@ -19,8 +22,8 @@ public class BetCalculatorWebsocketController {
 
     @MessageMapping("/addBet")
     @SendTo("/topic/bets")
-    public BetResponseDto create(BetRequestDto betRequestDto) {
-        Bet savedBet = betService.saveBet(betRequestDto.toEntity());
-        return savedBet.toDto();
+    public BetResponseDto create(BetRequestDto betRequestDto) throws ExecutionException, InterruptedException {
+        CompletableFuture<Bet> savedBet = betService.saveBet(betRequestDto.toEntity());
+        return savedBet.get().toDto();
     }
 }
